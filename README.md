@@ -72,46 +72,64 @@ erDiagram
     AUTOR ||--o{ CHAMADO_PROBLEMA : abre
     MAPEAMENTO ||--o| MAPEAMENTO_EMBEDDING : "tem vetor"
 
-    AUTOR { int id PK
-            string nome
-            string email UK }
-    CATEGORIA { int id PK
-                string nome UK
-                text descricao }
-    CLIENTE { int id PK
-              string nome UK
-              char14 cnpj UK
-              bool ativo }
-    TIPO_DOCUMENTO { int id PK
-                     string codigo UK
-                     string descricao }
-    MAPEAMENTO { int id PK
-                 string titulo
-                 text descricao
-                 text regras_texto
-                 string status
-                 timestamptz criado_em
-                 int autor_id FK
-                 int categoria_id FK
-                 int cliente_id FK
-                 int tipo_documento_id FK
-                 tsvector busca_tsv }
-    TAG { int id PK
-          string nome UK }
-    MAPEAMENTO_TAG { int mapeamento_id PK_FK
-                     int tag_id PK_FK }
-    CHAMADO_PROBLEMA { int id PK
-                       int mapeamento_id FK
-                       int autor_id FK
-                       string titulo
-                       text problema_texto
-                       text solucao_texto
-                       string status
-                       timestamptz criado_em }
-    MAPEAMENTO_EMBEDDING { int mapeamento_id PK_FK
-                           text conteudo
-                           vector embedding
-                           timestamptz atualizado_em }
+    AUTOR {
+        int id PK
+        string nome
+        string email UK
+    }
+    CATEGORIA {
+        int id PK
+        string nome UK
+        text descricao
+    }
+    CLIENTE {
+        int id PK
+        string nome UK
+        string cnpj UK
+        boolean ativo
+    }
+    TIPO_DOCUMENTO {
+        int id PK
+        string codigo UK
+        string descricao
+    }
+    MAPEAMENTO {
+        int id PK
+        string titulo
+        text descricao
+        text regras_texto
+        string status
+        timestamptz criado_em
+        int autor_id FK
+        int categoria_id FK
+        int cliente_id FK
+        int tipo_documento_id FK
+        tsvector busca_tsv
+    }
+    TAG {
+        int id PK
+        string nome UK
+    }
+    MAPEAMENTO_TAG {
+        int mapeamento_id PK, FK
+        int tag_id PK, FK
+    }
+    CHAMADO_PROBLEMA {
+        int id PK
+        int mapeamento_id FK
+        int autor_id FK
+        string titulo
+        text problema_texto
+        text solucao_texto
+        string status
+        timestamptz criado_em
+    }
+    MAPEAMENTO_EMBEDDING {
+        int mapeamento_id PK, FK
+        text conteudo
+        vector embedding
+        timestamptz atualizado_em
+    }
 ```
 
 ### Decisões de normalização (3FN)
