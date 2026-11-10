@@ -32,6 +32,19 @@ services:
       db:
         condition: service_healthy
 
+  # Opcional (perfil "ollama"): embeddings semânticos reais e geração de respostas, 100% local e gratuito.
+  # Suba com: docker compose --profile ollama up -d
+  ollama:
+    image: ollama/ollama:latest
+    container_name: smartbase-ollama
+    profiles: ["ollama"]
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
 volumes:
   pgdata:
   pgadmin-data:
+  ollama-data:
