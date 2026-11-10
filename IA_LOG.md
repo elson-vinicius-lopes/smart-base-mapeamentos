@@ -21,6 +21,16 @@ e as adaptações manuais. A coluna **"Minhas anotações"** é para a dupla pre
 | 8 | Benchmark | "Comparar tempo com e sem índice vetorial via EXPLAIN ANALYZE" | `src/bench.js` | O "sem índice" faz `DROP INDEX` dentro de transação e dá `ROLLBACK`, então o índice permanece. | |
 | 9 | Docs | "README com passo a passo, DER Mermaid, normalização, trilha C" | `README.md`, este log | Resultados reais colados após a execução. | |
 
+## Verificação final (teste completo)
+Ambiente zerado (volumes apagados, `node_modules` e `.env` removidos) e README seguido à risca:
+- `docker compose --profile ollama up -d`, `ollama pull`, `npm install`, `migrate`, `seed`, `embed`, `search`, `ask`, `bench`: tudo sem erro.
+- 18 verificações de integridade (CNPJ inválido, UNIQUE, CHECK de status, FK inexistente, chamado resolvido sem solução, PK composta duplicada, vetor de dimensão errada, RESTRICT e CASCADE) em transação com ROLLBACK: 18 ok.
+- `embed` interrompido após 160 registros e retomado: processou só os 4840 faltantes e concluiu (5000).
+- `ask` nos 3 caminhos: com LLM, sem modelo de chat instalado e com Ollama fora do ar (imprime o contexto); `search`/`ask` sem argumento retornam uso e exit 1.
+- pgAdmin: login com as credenciais do `.env` e cadastro do servidor `db:5432` funcionaram.
+- **Defeito achado e corrigido:** o DER Mermaid do README tinha sintaxe inválida (validado com `mermaid.parse`).
+- Não testado: Docker Desktop nativo no Windows (testado com Docker Engine no WSL).
+
 ## Observações gerais
 - A IA executou os comandos de verdade (Docker no WSL, migrate, seed, embed, search) e corrigiu o que falhou.
 - Pontos para revisão humana: textos dos conceitos (`src/conceitos.js`), escolha do HNSW vs IVFFlat, parâmetros do benchmark.
