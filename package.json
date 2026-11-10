@@ -4,7 +4,9 @@
   "description": "Smart-Base: catálogo de mapeamentos de documentos fiscais (fictício) com busca semântica via pgvector - Banco de Dados II",
   "type": "module",
   "private": true,
-  "engines": { "node": ">=22 <25" },
+  "engines": {
+    "node": ">=22 <25"
+  },
   "scripts": {
     "migrate": "node src/migrate.js",
     "seed": "node src/seed.js",
@@ -12,5 +14,10 @@
     "search": "node src/search.js",
     "ask": "node src/ask.js",
     "bench": "node src/bench.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.6.0",
+    "dotenv": "^18.0.10",
+    "pg": "^8.23.1"
   }
 }
